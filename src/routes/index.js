@@ -1,6 +1,7 @@
 
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ApiTest from '../pages/dashboard/ApiTest';
 
 
 // react lazy only supports deault export
@@ -12,7 +13,10 @@ const Index = () => {
             <Suspense fallback={<div>Loading...</div>}>
                 < Routes>
                     {/* <Route path='/' element={<Login />} /> */}
-                    <Route path='/' element={<Dashboard />} />
+                    {/* <Route path='/' element={<Dashboard />} /> */}
+                    <Route path='/' element={<ApiTest />} />
+
+                    
 
                 </Routes>
             </Suspense>
