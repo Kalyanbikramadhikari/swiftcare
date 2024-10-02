@@ -28,11 +28,20 @@ export const patientApi = createApi({
       providesTags: ['patients']
     }),
 
+
+
     // get individual patient
     getPatientByID: builder.query({
-      query: (id) => `pokemon/${id}`,
+      query: (id) => {
+        console.log('id', id)
+        return {
+          url: `pokemon/${id}`,
+        }
+      },
 
-      providesTags: ['patient']
+      // providesTags: ['patient']
+      providesTags: (result, error, id) => [{ type: 'patient', id }],
+
     }),
 
 
@@ -45,7 +54,9 @@ export const patientApi = createApi({
           body: data,
         }
       },
-      invalidatesTags:['patient']
+      invalidatesTags: (result, error, id) => [{ type: 'patient', id }],
+
+
     })
 
 
@@ -53,4 +64,4 @@ export const patientApi = createApi({
 })
 
 
-export const { useGetPatientsQuery } = patientApi
+export const { useGetPatientsQuery, usePrefetch } = patientApi

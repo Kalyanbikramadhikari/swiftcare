@@ -1,21 +1,11 @@
 import React from 'react'
-import { useGetPatientsQuery, usePrefetch } from '../../store/APIFeatures/PatientApi'
-// import { patientApi } from '../../store/APIFeatures/PatientApi';
+import { useGetPatientsQuery } from '../../store/APIFeatures/PatientApi'
 import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
 
 
 
-const ApiTest = () => {
+const CachingTest = () => {
     const {data, isLoading, error} = useGetPatientsQuery()
-
-    const prefetchUser = usePrefetch('getPatientByID');
-    // const dispatch = useDispatch()
-
-    const handleHover =(name)=>{
-      // dispatch(patientApi.util.prefetch('getPatientByID',name, {force:true} ))
-      prefetchUser(name, {force:true})
-    }
   return (
     <div className="App">
       {error ? (
@@ -24,7 +14,7 @@ const ApiTest = () => {
         <>Loading...</>
       ) : data ? (
         <>
-        {data.results.map((item, index)=><div key={index} onMouseEnter={()=>handleHover(item.name)}>
+        {data.results.map((item, index)=><div key={index}>
             {item.name}
             {item.url}
             <Link to='/hello'>
@@ -40,4 +30,4 @@ const ApiTest = () => {
   )
 }
 
-export default ApiTest
+export default CachingTest
