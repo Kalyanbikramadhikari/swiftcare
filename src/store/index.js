@@ -12,6 +12,8 @@ import { rtkQueryErrorLogger } from './middleware/errorHandlingMiddleware'
 import PatientSlice from './reducerSlices/PatientSlice'
 import { staffApi } from './APIFeatures/StaffApi'
 import StaffSlice from './reducerSlices/StaffSlice'
+import { adminApi } from './APIFeatures/AdminApi'
+import AdminSlice from './reducerSlices/AdminSlice'
 
 
 
@@ -20,13 +22,17 @@ export const store = configureStore({
     // Add the generated reducer as a specific top-level slice
     [patientApi.reducerPath]: patientApi.reducer,
     [staffApi.reducerPath]: staffApi.reducer,
-    patientSlice:PatientSlice,
-    staffSlice:StaffSlice 
+    [adminApi.reducerPath]: adminApi.reducer,
+    patient: PatientSlice,
+    staff: StaffSlice,
+    admin: AdminSlice
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(patientApi.middleware),
+    // getDefaultMiddleware().concat(patientApi.middleware, staffApi.middleware, adminApi.middleware, rtkQueryErrorLogger),
+  getDefaultMiddleware().concat(patientApi.middleware, staffApi.middleware, adminApi.middleware),
+
 })
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

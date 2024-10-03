@@ -1,7 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { toast } from 'react-toastify'
+import { usePatientRegisterMutation } from '../store/APIFeatures/PatientApi'
+
+const testRegisterData = {
+    "email": "eve.holt@reqres.in",
+    "password": "pistol"
+}
 
 const PreviewDialog = ({data}) => {
-    console.log('data', data)
+    const [registerPatient, {data:registeredPatientData, isLoading, isSuccess}] = usePatientRegisterMutation
+
+     
+    const handleRegisterPatient = (e)=>{
+        registerPatient(testRegisterData)
+
+
+    }
+
+
+    useEffect(()=>{
+        if(isSuccess){
+            toast.success('Patient Registeration Sucessfull')
+        }
+    },[isSuccess])
     return (
         <div className="fixed inset-0 z-30 flex  bg-black bg-opacity-10 font-manrope ">
             <div className="flex flex-col mx-[500px] my-[50px] w-full bg-white   ">
@@ -51,6 +72,12 @@ const PreviewDialog = ({data}) => {
                         ))}
                         </div>
                     </div>
+                </div>
+
+
+                <div className="flex justify-end">
+                <button className='bg-button-default p-3 text-white rounded-border mt-4' onClick={handleRegisterPatient}>Submit</button>
+
                 </div>
 
 

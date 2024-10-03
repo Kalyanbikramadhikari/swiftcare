@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Title from '../../components/Title'
+import Title from '../../../components/Title'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
@@ -7,12 +7,13 @@ import IconButton from '@mui/material/IconButton';
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { usePatientloginMutation } from '../../store/APIFeatures/PatientApi';
+import { usePatientloginMutation } from '../../../store/APIFeatures/PatientApi';
 import { toast } from 'react-toastify';
-import { useStaffLoginMutation } from '../../store/APIFeatures/StaffApi';
+import { useStaffLoginMutation } from '../../../store/APIFeatures/StaffApi';
+import { useAdminLoginMutation } from '../../../store/APIFeatures/AdminApi';
 
 const Login = () => {
-    const [staffLogin, { data: loggedInPatientData, isLoading, isSuccess }] = useStaffLoginMutation()
+    const [staffLogin, { data: loggedInPatientData, isLoading, isSuccess }] = useAdminLoginMutation()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -25,8 +26,8 @@ const Login = () => {
         staffLogin(loggingInData)
     }
 
-    useEffect(()=>{
-        if(isSuccess){
+    useEffect(() => {
+        if (isSuccess) {
             toast.success('sucessful login')
             console.log('loggedInPatientData', loggedInPatientData)
         }
@@ -50,12 +51,12 @@ const Login = () => {
                         <div className="flex flex-col space-y-[24px] ">
                             <div className="relative rounded-border border-border border-[1px] p-2 text-[14px]">
                                 <span className='bg-white text-border absolute -top-3 px-2 text-[14px]' >Email</span>
-                                <input type="email" className='w-full outline-none p-2' placeholder='helloworld@gmail.com'onChange={(e) =>setEmail(e.target.value)} />
+                                <input type="email" className='w-full outline-none p-2' placeholder='helloworld@gmail.com' onChange={(e) => setEmail(e.target.value)} />
 
                             </div>
                             <div className="relative rounded-border border-border border-[1px] p-2 text-[14px]">
                                 <span className='bg-white text-border absolute -top-3 px-2  text-[14px]' >Password</span>
-                                <input type="text" className='w-full outline-none p-2 ' placeholder='helloworld@gmail.com' onChange={(e) => setPassword(e.target.value)}/>
+                                <input type="text" className='w-full outline-none p-2 ' placeholder='helloworld@gmail.com' onChange={(e) => setPassword(e.target.value)} />
 
                             </div>
 
@@ -190,12 +191,12 @@ const Login = () => {
 
                                     <div className="relative rounded-border border-border border-[1px] p-2 text-[14px]">
                                         <span className='bg-white text-border absolute -top-3 px-2 text-[14px]' >Email</span>
-                                        <input type="email" className='w-full outline-none p-2' placeholder='helloworld@gmail.com' onChange={(e) => setEmail(e.target.value)}/>
+                                        <input type="email" className='w-full outline-none p-2' placeholder='helloworld@gmail.com' onChange={(e) => setEmail(e.target.value)} />
 
                                     </div>
                                     <div className="relative rounded-border border-border border-[1px] p-2 text-[14px]">
                                         <span className='bg-white text-border absolute -top-3 px-2  text-[14px]' >Password</span>
-                                        <input type="text" className='w-full outline-none p-2 ' placeholder='helloworld@gmail.com' onChange={(e) => setPassword(e.target.value)}/>
+                                        <input type="text" className='w-full outline-none p-2 ' placeholder='helloworld@gmail.com' onChange={(e) => setPassword(e.target.value)} />
 
                                     </div>
 

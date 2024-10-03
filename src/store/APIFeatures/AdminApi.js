@@ -5,35 +5,35 @@
 
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { getStaffDetail } from '../reducerSlices/StaffSlice'
+import { getAdminDetail } from '../reducerSlices/AdminSlice'
 
 // Define a service using a base URL and expected endpoints
-export const staffApi = createApi({
-  reducerPath: 'staffApi',
+export const adminApi = createApi({
+  reducerPath: 'adminApi',
 
   // https://s2e.tech-glazers.com/api
   // 'https://pokeapi.co/api/v2/'
   // https://reqres.in/api/login
   baseQuery: fetchBaseQuery({ baseUrl: 'https://reqres.in/api' }),
-  tagTypes: ['staffs', 'staff'],
+  tagTypes: ['admins', 'admin'],
   endpoints: (builder) => ({
 
 
-    // get all the staffs
-    getAllStaff: builder.query({
+    // get all the admins
+    getAllAdmin: builder.query({
       query: () => {
         return {
           url: '/pokemon'
 
         }
       },
-      providesTags: ['staffs']
+      providesTags: ['admins']
     }),
 
 
 
-    // get individual staff
-    getStaffByID: builder.query({
+    // get individual admin
+    getAdminByID: builder.query({
       query: (id) => {
         console.log('id', id)
         return {
@@ -41,13 +41,13 @@ export const staffApi = createApi({
         }
       },
 
-      providesTags: (result, error, id) => [{ type: 'staff', id }],
+      providesTags: (result, error, id) => [{ type: 'admin', id }],
 
     }),
 
 
     //update a patient. this uses id
-    updateStaff: builder.mutation({
+    updateAdmin: builder.mutation({
       query: (id, data) => {
         return {
           url: `pokemon/${id}`,
@@ -55,7 +55,7 @@ export const staffApi = createApi({
           body: data,
         }
       },
-      invalidatesTags: (result, error, id) => [{ type: 'staff', id }],
+      invalidatesTags: (result, error, id) => [{ type: 'admin', id }],
 
 
     }),
@@ -63,7 +63,7 @@ export const staffApi = createApi({
     // login patient
     // "email": "eve.holt@reqres.in",
     // "password": "cityslicka
-    staffLogin: builder.mutation({
+    adminLogin: builder.mutation({
       query: (data) => {
         console.log('DATA', data)
         return {
@@ -80,7 +80,7 @@ export const staffApi = createApi({
           const { data: logggedInStaffData } = await queryFulfilled
 
           // debugger
-          dispatch(getStaffDetail(logggedInStaffData))
+          dispatch(getAdminDetail(logggedInStaffData))
         } catch (error) {
           console.log('error', error)
         }
@@ -89,11 +89,23 @@ export const staffApi = createApi({
       }
     }),
 
-    
+    // admin login mutation
+    adminRegister: builder.mutation({
+        query: (data) => {
+          console.log('DATA', data)
+          return {
+            url: '/register',
+            method: 'POST',
+            body: data
+  
+          }
+        },
+  
+      }),
 
 
   }),
 })
 
 
-export const { useGetAllStaffQuery, useGetStaffByIDQuery, useStaffLoginMutation } = staffApi
+export const { useGetAllAdminQuery, useGetAdminByIDQuery, useAdminLoginMutation, useAdminRegisterMutation } = adminApi

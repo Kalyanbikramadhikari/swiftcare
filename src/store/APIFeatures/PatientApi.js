@@ -92,9 +92,36 @@ export const patientApi = createApi({
       }
     }),
 
+    // register a staff
+    patientRegister: builder.mutation({
+      query: (data) => {
+        console.log('DATA', data)
+        return {
+          url: '/register',
+          method: 'POST',
+          body: data
+
+        }
+      },
+
+      // async onQueryStarted(args, { dispatch, queryFulfilled }) {
+      //   // no need of try catch as error middleware already looks for error if any
+      //   try {
+      //     const { data: logggedInStaffData } = await queryFulfilled
+
+      //     // debugger
+      //     dispatch(getStaffDetail(logggedInStaffData))
+      //   } catch (error) {
+      //     console.log('error', error)
+      //   }
+
+
+      // }
+    }),
+
 
   }),
 })
 
 
-export const { useGetPatientsQuery, usePrefetch, usePatientloginMutation } = patientApi
+export const { useGetPatientsQuery, usePrefetch, usePatientloginMutation, usePatientRegisterMutation } = patientApi
