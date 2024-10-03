@@ -13,9 +13,9 @@ const Index = () => {
         <Router>
             <Suspense fallback={<div>Loading...</div>}>
                 < Routes>
-                    {/* <Route path='/' element={<Login />} /> */}
+                    <Route path='/' element={<Login />} />
                     <Route path='/hello' element={<CachingTest />} />
-                    <Route path='/' element={<ApiTest />} />
+                    {/* <Route path='/' element={<ApiTest />} /> */}
 
                     
 

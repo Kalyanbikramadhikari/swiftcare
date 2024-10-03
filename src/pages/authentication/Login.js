@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Title from '../../components/Title'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -7,19 +7,31 @@ import IconButton from '@mui/material/IconButton';
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { usePatientloginMutation } from '../../store/APIFeatures/PatientApi';
+import { toast } from 'react-toastify';
+import { useStaffLoginMutation } from '../../store/APIFeatures/StaffApi';
 
 const Login = () => {
+    const [staffLogin, { data: loggedInPatientData, isLoading, isSuccess }] = useStaffLoginMutation()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     const [showPassword, setShowPassword] = React.useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    const handleLogin = () => {
+        var loggingInData = { "email": email, "password": password }
+        // loggingInData = JSON.stringify(loggingInData)
+        staffLogin(loggingInData)
+    }
 
-    const handleMouseUpPassword = (event) => {
-        event.preventDefault();
-    };
+    useEffect(()=>{
+        if(isSuccess){
+            toast.success('sucessful login')
+            console.log('loggedInPatientData', loggedInPatientData)
+        }
+    })
+
     return (
         <div className='mx-[20px] md:mx-0  font-manrope mt-20 md:mt-0'>
             {
@@ -36,95 +48,17 @@ const Login = () => {
 
                         {/* this will contain the email and password section */}
                         <div className="flex flex-col space-y-[24px] ">
-                            <TextField
-                                // required
-                                label="Email"
-                                placeholder="helloworld@gmail.com"
-                                // variant="outlined"
-                                fullWidth
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true
-                                    },
-                                }}
-                                sx={{
-                                    '& .MuiOutlinedInput-root': {
-                                        fontFamily: 'Manrope, sans-serif', // Input font
-                                        fontSize: '14px', // Input font size
-                                        borderRadius: '5px', // Border radius for input field
-                                        '& fieldset': {
-                                            borderColor: '#79747E', // Border color
-                                        },
-                                        '&:hover fieldset': {
-                                            borderColor: '#79747E', // Change border color on hover
-                                        },
-                                        '&.Mui-focused fieldset': {
-                                            borderColor: '#79747E', // Border color when focused
-                                        },
-                                    },
-                                    '& .MuiInputLabel-root': {
-                                        fontFamily: 'Manrope, sans-serif', // Label font
-                                        fontSize: '16px', // Label font size
-                                        // color:'#79747E'
-                                    },
-                                    '& .MuiInputLabel-root.Mui-focused': {
-                                        color: '#79747E', // Label color when focused
-                                    },
-                                }}
-                            />
-                            <TextField
-                                // required
-                                label="Password"
-                                type={showPassword ? 'text' : 'password'}
-                                // placeholder="helloworld@gmail.com"
-                                // variant="outlined"
-                                fullWidth
-                                onClick={handleClickShowPassword}
-                                slotProps={{
-                                    inputLabel: {
-                                        shrink: true
-                                    },
-                                }}
+                            <div className="relative rounded-border border-border border-[1px] p-2 text-[14px]">
+                                <span className='bg-white text-border absolute -top-3 px-2 text-[14px]' >Email</span>
+                                <input type="email" className='w-full outline-none p-2' placeholder='helloworld@gmail.com'onChange={(e) =>setEmail(e.target.value)} />
 
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            // onMouseDown={handleMouseDownPassword}
-                                            // onMouseUp={handleMouseUpPassword}
-                                            edge="end"
-                                        >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                sx={{
-                                    '& .MuiOutlinedInput-root': {
-                                        fontFamily: 'Manrope, sans-serif', // Input font
-                                        fontSize: '14px', // Input font size
-                                        borderRadius: '5px', // Border radius for input field
-                                        '& fieldset': {
-                                            borderColor: '#79747E', // Border color
-                                        },
-                                        '&:hover fieldset': {
-                                            borderColor: '#79747E', // Change border color on hover
-                                        },
-                                        '&.Mui-focused fieldset': {
-                                            borderColor: '#79747E', // Border color when focused
-                                        },
-                                    },
-                                    '& .MuiInputLabel-root': {
-                                        fontFamily: 'Manrope, sans-serif', // Label font
-                                        fontSize: '16px', // Label font size
-                                        // color:'#79747E'
-                                    },
-                                    '& .MuiInputLabel-root.Mui-focused': {
-                                        color: '#79747E', // Label color when focused
-                                    },
-                                }}
+                            </div>
+                            <div className="relative rounded-border border-border border-[1px] p-2 text-[14px]">
+                                <span className='bg-white text-border absolute -top-3 px-2  text-[14px]' >Password</span>
+                                <input type="text" className='w-full outline-none p-2 ' placeholder='helloworld@gmail.com' onChange={(e) => setPassword(e.target.value)}/>
 
-                            />
+                            </div>
+
 
                             <div className="flex justify-between font-manrope text-border text-[16px]">
                                 <div className="flex space-x-2">
@@ -141,7 +75,7 @@ const Login = () => {
 
                         </div>
                         <div className="flex flex-col space-y-5 text-16px">
-                            <button className='bg-button-default hover:bg-button-hover w-full text-white font-manrope font-normal p-3 rounded-border'>Login</button>
+                            <button className='bg-button-default hover:bg-button-hover w-full text-white font-manrope font-normal p-3 rounded-border' onClick={handleLogin}>Login</button>
 
                             <div className="flex justify-center space-x-1">
                                 <span className='text-[#4D4D4D]'>Don't have an account?</span>
@@ -164,7 +98,7 @@ const Login = () => {
                                 <Title title='Login' />
 
                                 <div className="flex flex-col space-y-[24px] ">
-                                    <TextField
+                                    {/* <TextField
                                         required
                                         label="Email"
                                         placeholder="helloworld@gmail.com"
@@ -252,7 +186,19 @@ const Login = () => {
                                             },
                                         }}
 
-                                    />
+                                    /> */}
+
+                                    <div className="relative rounded-border border-border border-[1px] p-2 text-[14px]">
+                                        <span className='bg-white text-border absolute -top-3 px-2 text-[14px]' >Email</span>
+                                        <input type="email" className='w-full outline-none p-2' placeholder='helloworld@gmail.com' onChange={(e) => setEmail(e.target.value)}/>
+
+                                    </div>
+                                    <div className="relative rounded-border border-border border-[1px] p-2 text-[14px]">
+                                        <span className='bg-white text-border absolute -top-3 px-2  text-[14px]' >Password</span>
+                                        <input type="text" className='w-full outline-none p-2 ' placeholder='helloworld@gmail.com' onChange={(e) => setPassword(e.target.value)}/>
+
+                                    </div>
+
 
                                     <div className="flex justify-between text-[16px] text-border font-manrope ">
                                         <div className="flex space-x-2">
@@ -269,7 +215,7 @@ const Login = () => {
 
                                 </div>
                                 <div className="flex flex-col space-y-5">
-                                    <button className='bg-button-default hover:bg-button-hover w-full text-white font-manrope font-normal p-3 rounded-border text-[16px] font-bold'>Login</button>
+                                    <button className='bg-button-default hover:bg-button-hover w-full text-white font-manrope font-normal p-3 rounded-border text-[16px] font-bold' onClick={handleLogin}>Login</button>
 
                                     <div className="flex justify-center space-x-1 text-[16px]">
                                         <span className='text-[#4D4D4D]'>Don't have an account?</span>

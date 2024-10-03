@@ -1,40 +1,39 @@
 
 // Author: Kalyan Bikram Adhikari
-// Created-Date: 2024/09/30
+// Created-Date: 2024/10/02
 // Modified-Date: 
 
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { getPatientDetail } from '../reducerSlices/PatientSlice'
-// import type { Pokemon } from './types'
+import { getStaffDetail } from '../reducerSlices/StaffSlice'
 
 // Define a service using a base URL and expected endpoints
-export const patientApi = createApi({
-  reducerPath: 'patientApi',
+export const staffApi = createApi({
+  reducerPath: 'staffApi',
 
   // https://s2e.tech-glazers.com/api
   // 'https://pokeapi.co/api/v2/'
   // https://reqres.in/api/login
   baseQuery: fetchBaseQuery({ baseUrl: 'https://reqres.in/api' }),
-  tagTypes: ['patients', 'patient'],
+  tagTypes: ['staffs', 'staff'],
   endpoints: (builder) => ({
 
 
-    // get all the patients
-    getPatients: builder.query({
+    // get all the staffs
+    getAllStaff: builder.query({
       query: () => {
         return {
           url: '/pokemon'
 
         }
       },
-      providesTags: ['patients']
+      providesTags: ['staffs']
     }),
 
 
 
-    // get individual patient
-    getPatientByID: builder.query({
+    // get individual staff
+    getStaffByID: builder.query({
       query: (id) => {
         console.log('id', id)
         return {
@@ -42,14 +41,13 @@ export const patientApi = createApi({
         }
       },
 
-      // providesTags: ['patient']
-      providesTags: (result, error, id) => [{ type: 'patient', id }],
+      providesTags: (result, error, id) => [{ type: 'staff', id }],
 
     }),
 
 
-    //update a patient
-    updatePatient: builder.mutation({
+    //update a patient. this uses id
+    updateStaff: builder.mutation({
       query: (id, data) => {
         return {
           url: `pokemon/${id}`,
@@ -57,7 +55,7 @@ export const patientApi = createApi({
           body: data,
         }
       },
-      invalidatesTags: (result, error, id) => [{ type: 'patient', id }],
+      invalidatesTags: (result, error, id) => [{ type: 'staff', id }],
 
 
     }),
@@ -65,7 +63,7 @@ export const patientApi = createApi({
     // login patient
     // "email": "eve.holt@reqres.in",
     // "password": "cityslicka
-    patientlogin: builder.mutation({
+    staffLogin: builder.mutation({
       query: (data) => {
         console.log('DATA', data)
         return {
@@ -79,11 +77,10 @@ export const patientApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         // no need of try catch as error middleware already looks for error if any
         try {
-          const { data: logggedInPatientData } = await queryFulfilled
-          console.log('sucessful logindata = ', logggedInPatientData);
+          const { data: logggedInStaffData } = await queryFulfilled
 
           // debugger
-          dispatch(getPatientDetail(logggedInPatientData))
+          dispatch(getStaffDetail(logggedInStaffData))
         } catch (error) {
           console.log('error', error)
         }
@@ -97,4 +94,4 @@ export const patientApi = createApi({
 })
 
 
-export const { useGetPatientsQuery, usePrefetch, usePatientloginMutation } = patientApi
+export const { useGetAllStaffQuery, useGetStaffByIDQuery, useStaffLoginMutation } = staffApi
