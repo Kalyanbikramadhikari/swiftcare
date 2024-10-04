@@ -10,6 +10,8 @@ import Register from '../pages/admin/authentication/Register';
 const Login = lazy(() => import('../pages/user/authentication/Login'));
 const Dashboard = lazy(() => import('../pages/dashboard'));
 const Permissions = lazy(() => import('../pages/admin/authentication/Permissions'));
+const Doctors = lazy(() => import('../pages/doctor/DoctorsList'));
+
 
 const Index = () => {
     return (
@@ -19,6 +21,8 @@ const Index = () => {
                     <Route path='/' element={<Dashboard />} />
                     <Route path='/admin/register' element={<Register />} />
                     <Route path='/admin/register/permissions' element={<Permissions />} />
+                    <Route path='/doctors' element={<Doctors />} />
+
 
                     
 
