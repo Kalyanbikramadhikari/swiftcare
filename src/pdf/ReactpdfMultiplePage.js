@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     }
 });
 
-const TestOne = () => {
+const ReactpdfMultiplePage = () => {
     // const [patientName, setPatientName] = useState('Ms. AAKRITI MAHARJAN');
     const [testResults, setTestResults] = useState([
         { test: 'Vitamin B12', result: '167.29', unit: 'pg/ml', range: '180.00 - 914.00', method: 'CLIA' },
@@ -141,17 +141,17 @@ const TestOne = () => {
     ]);
 
     return (
-        <PDFViewer style={{ width: '100%', height: '100vh' }}>
+        // <PDFViewer style={{ width: '100%', height: '100vh' }}>
             <Document>
                 <Page size="A4" style={styles.page}>
-                    <View style={styles.header}>
+                    <View style={styles.header} fixed>
                         <Image style={styles.logo} src="/images/logo.png" />
                         {/* <View>
                             <Text>Swift Care Diagnostic</Text>
                             <Text>Immunology - Special Test Report</Text>
                         </View> */}
                     </View>
-                    <View style={styles.patientData}>
+                    <View style={styles.patientData} wrap={false}>
                         <View style={styles.patientRow}>
                             <Text style={styles.patientItem}>Name</Text>
                             <Text style={styles.patientItem}>: Ms. Sakar Aryal</Text>
@@ -179,7 +179,7 @@ const TestOne = () => {
                         </View>
 
                     </View>
-                    <View style={styles.table}>
+                    <View style={styles.table} wrap={false}>
                         <View style={styles.tableRow}>
                             <Text style={styles.tableCellHeader}>Test</Text>
                             <Text style={styles.tableCellHeader}>Result</Text>
@@ -197,7 +197,7 @@ const TestOne = () => {
                             </View>
                         ))}
                     </View>
-                    <View style={styles.testsummary}>
+                    <View style={styles.testsummary} wrap={false}>
                         <Text style={styles.note}>NOTE:</Text>
                         <Text>Summary:</Text>
                         <Text>Vitamin B 12 along with folate is essential for DNA synthesis and myelin formation.
@@ -215,7 +215,7 @@ const TestOne = () => {
                     </View>
 
 
-                    <View style={styles.testsummary}>
+                    <View style={styles.testsummary} wrap={false}>
                         <Text style={styles.note}>NOTE</Text>
                         <View >
                             <View >
@@ -271,15 +271,15 @@ const TestOne = () => {
                     </View>
 
 
-                    <View style={styles.footer} >
+                    <View style={styles.footer} fixed>
                         <PdfFooter />
 
                     </View>
 
                 </Page>
             </Document>
-        </PDFViewer>
+        // </PDFViewer>
     );
 };
 
-export default TestOne;
+export default ReactpdfMultiplePage;

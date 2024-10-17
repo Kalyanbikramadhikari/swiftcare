@@ -4,9 +4,14 @@ import Sidebar from '../../components/Sidebar'
 import UpdatePatientDetail from '../../dialogBoxes/UpdatePatientDetail'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TablePagination } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-
+import PdfFooter from '../../pdf/PdfFooter';
+import { BlobProvider, PDFDownloadLink } from '@react-pdf/renderer';
+import TestOne from '../../pdf/TestOne';
+import ReactpdfMultiplePage from '../../pdf/ReactpdfMultiplePage';
 
 const AddPatients = lazy(() => import('../../dialogBoxes/AddPatients'))
+
+
 
 const patientsData = [
   { patientId: 1, patientName: "John Doe", age: 25, sex: "Male", referredBy: "Dr. Smith" },
@@ -131,15 +136,15 @@ const Index = () => {
                   {patientsData
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((patient, index) => (
-                      <TableRow key={patient.patientId} sx={{ height:'5px'}}>
-                        <TableCell sx={{border:'1px solid gray',padding:'2px', border:'1px solid gray', width:'10px'}}>{page * rowsPerPage + index + 1}</TableCell>
+                      <TableRow key={patient.patientId} sx={{ height: '5px' }}>
+                        <TableCell sx={{ border: '1px solid gray', padding: '2px', border: '1px solid gray', width: '10px' }}>{page * rowsPerPage + index + 1}</TableCell>
                         {/* <TableCell>{patient.patientId}</TableCell> */}
-                        <TableCell sx={{border:'1px solid gray',padding:'2px', border:'1px solid gray'}}>{patient.patientName}</TableCell>
-                        <TableCell sx={{border:'1px solid gray',padding:'2px', border:'1px solid gray'}}>{`${patient.age}/${patient.sex}`}</TableCell>
-                        <TableCell sx={{border:'1px solid gray',padding:'2px', border:'1px solid gray'}}>{patient.referredBy}</TableCell>
-                        <TableCell sx={{border:'1px solid gray',padding:'2px', border:'1px solid gray'}}>
+                        <TableCell sx={{ border: '1px solid gray', padding: '2px', border: '1px solid gray' }}>{patient.patientName}</TableCell>
+                        <TableCell sx={{ border: '1px solid gray', padding: '2px', border: '1px solid gray' }}>{`${patient.age}/${patient.sex}`}</TableCell>
+                        <TableCell sx={{ border: '1px solid gray', padding: '2px', border: '1px solid gray' }}>{patient.referredBy}</TableCell>
+                        <TableCell sx={{ border: '1px solid gray', padding: '2px', border: '1px solid gray' }}>
                           <Button variant="contained" color="primary" size="small">
-                            <AddIcon/>
+                            <AddIcon />
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -175,15 +180,15 @@ const Index = () => {
                   {patientsData
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((patient, index) => (
-                      <TableRow key={patient.patientId} sx={{ height:'5px'}}>
-                        <TableCell sx={{border:'1px solid gray',padding:'2px', border:'1px solid gray', width:'10px'}}>{page * rowsPerPage + index + 1}</TableCell>
+                      <TableRow key={patient.patientId} sx={{ height: '5px' }}>
+                        <TableCell sx={{ border: '1px solid gray', padding: '2px', border: '1px solid gray', width: '10px' }}>{page * rowsPerPage + index + 1}</TableCell>
                         {/* <TableCell>{patient.patientId}</TableCell> */}
-                        <TableCell sx={{border:'1px solid gray',padding:'2px', border:'1px solid gray'}}>{patient.patientName}</TableCell>
-                        <TableCell sx={{border:'1px solid gray',padding:'2px', border:'1px solid gray'}}>{`${patient.age}/${patient.sex}`}</TableCell>
-                        <TableCell sx={{border:'1px solid gray',padding:'2px', border:'1px solid gray'}}>{patient.referredBy}</TableCell>
-                        <TableCell sx={{border:'1px solid gray',padding:'2px', border:'1px solid gray'}}>
+                        <TableCell sx={{ border: '1px solid gray', padding: '2px', border: '1px solid gray' }}>{patient.patientName}</TableCell>
+                        <TableCell sx={{ border: '1px solid gray', padding: '2px', border: '1px solid gray' }}>{`${patient.age}/${patient.sex}`}</TableCell>
+                        <TableCell sx={{ border: '1px solid gray', padding: '2px', border: '1px solid gray' }}>{patient.referredBy}</TableCell>
+                        <TableCell sx={{ border: '1px solid gray', padding: '2px', border: '1px solid gray' }}>
                           <Button variant="contained" color="primary" size="small">
-                            <AddIcon/>
+                            <AddIcon />
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -210,7 +215,29 @@ const Index = () => {
 
         <button type='button' className='font-manrope p-3 rounded-border text-white border-black border-2 bg-button-default hover:bg-button-hover ' onClick={handleUpdatePatientClick}>Update Patient</button>
 
+        {/* <button type='button' className='font-manrope p-3 rounded-border text-white border-black border-2 bg-button-default hover:bg-button-hover ' >Download pdf</button> */}
 
+        <BlobProvider
+          document={<ReactpdfMultiplePage />} >
+          {({ blob, url, loading, error }) => {
+            if (loading) return <p>Loading document...</p>;
+            if (error) return <p>Failed to load document: {error.message}</p>;
+
+            return (
+              <div>
+                <h2>PDF Document Preview</h2>
+                <iframe
+                  src={url}
+                  title="PDF Preview"
+                  width="100%"
+                  height="600px"
+                  style={{ border: '1px solid #ccc' }}
+                />
+              </div>
+            );
+          }}
+
+        </BlobProvider>
 
       </div>
 

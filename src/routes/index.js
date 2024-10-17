@@ -6,7 +6,9 @@ import CachingTest from '../pages/dashboard/CachingTest';
 import Register from '../pages/admin/authentication/Register';
 import PdfGenerator from '../components/testpdf';
 import PdfHeader from '../pdf/PdfHeader';
-import TestTwo from '../pdf/TestTwo';
+// import TestTwo from '../pdf/TestTwo';
+import TestOne from '../pdf/TestOne';
+import ReactpdfMultiplePage from '../pdf/ReactpdfMultiplePage';
 
 
 // react lazy only supports deault export
@@ -25,8 +27,10 @@ const Index = () => {
                     <Route path='/admin/register' element={<Register />} />
                     <Route path='/admin/register/permissions' element={<Permissions />} />
                     <Route path='/doctors' element={<Doctors />} />
-                    {/* <Route path='/pdf' element={<PdfGenerator />} /> */}
-                    <Route path='/pdf' element={<TestTwo />} />
+                    <Route path='/pdf' element={<TestOne/>} />
+                    <Route path='/pdf2' element={<ReactpdfMultiplePage/>} />
+
+                    {/* <Route path='/pdf' element={<TestTwo />} /> */}
 
 
 
