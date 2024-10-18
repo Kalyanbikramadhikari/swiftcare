@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Document, Page, Text, View, Image, StyleSheet, PDFViewer } from '@react-pdf/renderer';
+import ReactPDF, { Document, Page, Text, View, Image, StyleSheet, PDFViewer } from '@react-pdf/renderer';
 import PdfFooter from './PdfFooter';
 
 const PatientData = {
@@ -29,256 +29,338 @@ const PatientData = {
 }
 
 
+// const styles = StyleSheet.create({
+//     page: {
+//         flexDirection: 'column',
+//         paddingTop: 180,  // Space for header
+//         paddingBottom: 120, //space for footer
+//         padding: 20,
+//         fontSize: 12,
+//         paddingBottom: 40,
+//         border: 1,
+
+
+//     },
+//     header: {
+
+//         position: 'fixed',
+//         // top: 10,
+//         left: 20,
+//         right: 20,
+//         flexDirection: 'row',
+//         // justifyContent: 'center',
+//     },
+//     logo: {
+//         // width: 50,
+//         height: 50,
+//         position: 'fixed'
+//     },
+//     patientData: {
+//         display: 'flex',
+//         marginBottom: 20,
+//         borderStyle: 'solid',
+//         borderColor: '#000',
+//         borderWidth: 1,
+//         padding: 10,
+//         flexWrap: 'wrap',
+//         flexDirection: 'row', // Ensure children are in a row
+//         justifyContent: 'space-between',
+//     },
+//     patientRow: {
+//         flexDirection: 'row',
+//         width: '49%',
+//         marginBottom: 3,
+//         // borderWidth: 1,
+
+
+//     },
+//     patientItem: {
+//         width: '50%'
+//     },
+//     table: {
+//         display: 'table',
+//         width: 'auto',
+//         borderStyle: 'solid',
+//         borderColor: '#000',
+//         borderWidth: 1,
+//     },
+//     tableRow: {
+//         flexDirection: 'row',
+//         borderBottomWidth: 1,
+//         borderBottomColor: '#000',
+//     },
+//     tableCellHeader: {
+//         width: '20%',
+//         padding: 5,
+//         borderBottomWidth: 1,
+//         borderBottomColor: '#000',
+//         // fontFamily:'' ,
+//         fontWeight: 'bold',
+
+//         // textAlign: 'center',
+//     },
+//     tableCell: {
+//         width: '20%',
+//         padding: 5,
+//         borderBottomWidth: 1,
+//         borderBottomColor: '#000',
+
+//         fontWeight: 'normal'
+//     },
+//     testsummary: {
+//         marginTop: 20,
+//         borderWidth: 1,
+//         padding: '5',
+//         paddingTop: '9'
+//     },
+//     note: {
+//         position: 'absolute',
+//         top: -7,
+//         backgroundColor: '#ffffff',
+//         paddingHorizontal: 3,
+//         fontWeight: '800'
+
+//     },
+//     footer: {
+//         position: 'fixed',
+//         width: '100%',
+//         bottom: 0,
+//         top: 5,
+//         right: 0,
+//         left: 0,
+
+
+//     }
+// });
+
 const styles = StyleSheet.create({
-    page: {
-        flexDirection: 'column',
-        paddingTop: 180,  // Space for header
-        paddingBottom: 120, //space for footer
-        padding: 20,
+    body: {
+        paddingTop: 35,
+        paddingBottom: 65,
+        paddingHorizontal: 35,
+      },
+      title:{
+        fontSize: 24,
+        textAlign: 'center',
+
+      },
+      author: {
         fontSize: 12,
-        paddingBottom: 40,
-        border:1,
-
-
-    },
-    header: {
-
-        position: 'fixed',
-        // top: 10,
-        left: 20,
-        right: 20,
-        flexDirection: 'row',
-        // justifyContent: 'center',
-    },
-    logo: {
-        // width: 50,
-        height: 50,
-        position: 'fixed'
-    },
-    patientData: {
-        display: 'flex',
+        textAlign: 'center',
+        marginBottom: 40,
+      },
+      subtitle: {
+        fontSize: 18,
+        margin: 12,
+      },
+      text: {
+        margin: 12,
+        fontSize: 14,
+        textAlign: 'justify',
+        fontFamily: 'Times-Roman'
+      },
+      
+      header: {
+        fontSize: 12,
         marginBottom: 20,
-        borderStyle: 'solid',
-        borderColor: '#000',
-        borderWidth: 1,
-        padding: 10,
-        flexWrap: 'wrap',
-        flexDirection: 'row', // Ensure children are in a row
-        justifyContent: 'space-between',
-    },
-    patientRow: {
-        flexDirection: 'row',
-        width: '49%',
-        marginBottom: 3,
-        // borderWidth: 1,
-
-
-    },
-    patientItem: {
-        width: '50%'
-    },
-    table: {
-        display: 'table',
-        width: 'auto',
-        borderStyle: 'solid',
-        borderColor: '#000',
-        borderWidth: 1,
-    },
-    tableRow: {
-        flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderBottomColor: '#000',
-    },
-    tableCellHeader: {
-        width: '20%',
-        padding: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#000',
-        // fontFamily:'' ,
-        fontWeight: 'bold',
-
-        // textAlign: 'center',
-    },
-    tableCell: {
-        width: '20%',
-        padding: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#000',
-
-        fontWeight: 'normal'
-    },
-    testsummary: {
-        marginTop: 20,
-        borderWidth: 1,
-        padding: '5',
-        paddingTop: '9'
-    },
-    note: {
+        textAlign: 'center',
+        color: 'grey',
+      },
+      pageNumber: {
         position: 'absolute',
-        top: -7,
-        backgroundColor: '#ffffff',
-        paddingHorizontal: 3,
-        fontWeight: '800'
-
-    },
-    footer: {
-        position: 'fixed',
-        width: '100%',
-        bottom: 0,
-        top:5,
-        right: 0,
+        fontSize: 12,
+        bottom: 30,
         left: 0,
-
-
-    }
-});
-
+        right: 0,
+        textAlign: 'center',
+        color: 'grey',
+      },
+})
 const ReactpdfMultiplePage = () => {
-    // const [patientName, setPatientName] = useState('Ms. AAKRITI MAHARJAN');
-    const [testResults, setTestResults] = useState([
-        { test: 'Vitamin B12', result: '167.29', unit: 'pg/ml', range: '180.00 - 914.00', method: 'CLIA' },
-        // { test: 'Vitamin D (25 HYDROXY)', result: '17.90', unit: 'ng/ml', range: 'Deficiency  20', method: 'CLIA' },
-    ]);
+    
 
     return (
-        // <PDFViewer style={{ width: '100%', height: '100vh' }}>
+        <PDFViewer style={{ width: '100%', height: '100vh' }}>
+
             <Document>
-                <Page size="A4" style={styles.page}>
-                    <View style={styles.header} fixed>
-                        <Image style={styles.logo} src="/images/logo.png" />
-                        {/* <View>
-                            <Text>Swift Care Diagnostic</Text>
-                            <Text>Immunology - Special Test Report</Text>
-                        </View> */}
-                    </View>
-                    <View style={styles.patientData} wrap={false}>
-                        <View style={styles.patientRow}>
-                            <Text style={styles.patientItem}>Name</Text>
-                            <Text style={styles.patientItem}>: Ms. Sakar Aryal</Text>
-                        </View>
-                        <View style={styles.patientRow}>
-                            <Text style={styles.patientItem}>Patient No.</Text>
-                            <Text style={styles.patientItem}>: 8104010</Text>
-                        </View>
-                        <View style={styles.patientRow}>
-                            <Text style={styles.patientItem}>Address</Text>
-                            <Text style={styles.patientItem}>: KIRTIPUR</Text>
-                        </View>
-                        <View style={styles.patientRow}>
-                            <Text style={styles.patientItem}>Age/Gender</Text>
-                            <Text style={styles.patientItem}>: 30 Y / F</Text>
-                        </View>
-
-                        <View style={styles.patientRow}>
-                            <Text style={styles.patientItem}>Name</Text>
-                            <Text style={styles.patientItem}>:Ms. Sakar Aryal</Text>
-                        </View>
-                        <View style={styles.patientRow}>
-                            <Text style={styles.patientItem}>Name</Text>
-                            <Text style={styles.patientItem}>:Ms. Sakar Aryal</Text>
-                        </View>
-
-                    </View>
-                    <View style={styles.table} wrap={false}>
-                        <View style={styles.tableRow}>
-                            <Text style={styles.tableCellHeader}>Test</Text>
-                            <Text style={styles.tableCellHeader}>Result</Text>
-                            <Text style={styles.tableCellHeader}>Unit</Text>
-                            <Text style={styles.tableCellHeader}>Reference Range</Text>
-                            <Text style={styles.tableCellHeader}>Method</Text>
-                        </View>
-                        {testResults.map((item, index) => (
-                            <View key={index} style={styles.tableRow}>
-                                <Text style={styles.tableCell}>{item.test}</Text>
-                                <Text style={styles.tableCell}>{item.result}</Text>
-                                <Text style={styles.tableCell}>{item.unit}</Text>
-                                <Text style={styles.tableCell}>{item.range}</Text>
-                                <Text style={styles.tableCell}>{item.method}</Text>
-                            </View>
-                        ))}
-                    </View>
-                    <View style={styles.testsummary} wrap={false}>
-                        <Text style={styles.note}>NOTE:</Text>
-                        <Text>Summary:</Text>
-                        <Text>Vitamin B 12 along with folate is essential for DNA synthesis and myelin formation.
-                            Vitamin B 12 deficiency can be because of nutritional deficiency, malabsorption and other gastrointestinal causes. The test is ordered primarily to help
-                            diagnose the cause of mycrocytic/ megaloblastic anemia.</Text>
-                        <Text>Decreased levels are seen in anaemia, normal near term pregnancy, vegetarianism, partial gastrectomy/ ileal damange, celiac disease, with oral contraceptive
-                            use, parasitic competion, pancreatic deficiency, treated epilepsy, smoking, hemodialysis and afvancing age.
-                        </Text>
-                        <Text>
-                            Increased levels are seen in renal failure, hepatocelluar disorders, myeloproliferative disorders and at times with excess supplementation of vitamins pills.
-                            *Please note test values may vary depending on the assay method used.
-
-                        </Text>
-
-                    </View>
-
-
-                    <View style={styles.testsummary} wrap={false}>
-                        <Text style={styles.note}>NOTE</Text>
-                        <View >
-                            <View >
-
-                                <Text >Reference Range:</Text>
-
-                            </View>
-                            <View style={{ fontSize: 10, flexDirection: 'row' }}>
-                                <Text >Deficiency:</Text>
-
-                                <Text >{'< 20'}</Text>
-
-                            </View>
-                            <View style={{ fontSize: 10, flexDirection: 'row' }}>
-                                <Text >Insufficiency:</Text>
-
-                                <Text >20 - {'<'}29</Text>
-
-                            </View>
-                            <View style={{ fontSize: 10, flexDirection: 'row' }}>
-                                <Text >Sufficient:</Text>
-
-                                <Text >30-100</Text>
-
-                            </View>
-                            <View style={{ fontSize: 10, flexDirection: 'row' }}>
-                                <Text >Toxicity:</Text>
-
-                                <Text >{'>'}100</Text>
-
-                            </View>
-                        </View>
-
-                        <Text style={styles.summary}>
-                            Summary:{'\n'}
-                            Vitamin D is a group of fat-soluble steroid hormone precursor responsible for increasing intestinal absorption of calcium, magnesium, and phosphate, and multiple other biological effects, which is mainly produced in the skin by exposure to sunlight. Vitamin D from the skin synthesis is biologically inactive; hydroxylation in the liver and kidney is required for activation. In humans, the most important compounds in this group are vitamin D3 and vitamin D2, both of them can be ingested from the diet and from supplements. Only a few foods contain vitamin D. The major natural source of the vitamin is synthesis of vitamin D3 in the skin from cholesterol through a chemical reaction that is dependent on sun exposure. Vitamin D is transported to the liver in combination with a binding protein in the bloodstream, converted to 25-hydroxyvitamin D in the liver, and then converted to 1,25-hydroxyvitamin D in the kidney. This is an active ingredient in which vitamin D functions. The 1,25 hydroxy vitamin D content in the circulation is extremely low, with a half-life of only 4 h. This primary circulating form of vitamin D (25-OH) is biologically inactive with levels approximately 1000-fold greater than the circulating1,25-dihydroxy vitamin D. The half-life of circulating vitamin D (25-OH) is 3 weeks. Vitamin D can regulate the balance of calcium and phosphorus metabolism and bone formation, and is closely related to cardiovascular disease, autoimmune diseases, diabetes and hypertension etc.
-                        </Text>
-                    </View>
-
-                    <View style={styles.signatureSection} wrap={false}>
-                        <View>
-                            <Text>Performed By</Text>
-                            <Text>Mahesh Gapaju</Text>
-                            <Text>Lab Technician</Text>
-                            <Text>NHPC No. : B-3359 MLT</Text>
-                        </View>
-                        <View>
-                            <Text>Validated by</Text>
-                            <Text>Saroj Kumar Shrestha</Text>
-                            <Text>Lab Technologist</Text>
-                            <Text>NHPC No. : A-1066 MLT</Text>
-                        </View>
-                    </View>
-
-
-                    <View style={styles.footer} fixed>
-                        <PdfFooter />
-
-                    </View>
-
+                <Page style={styles.body} >
+                    <Text style={styles.header} fixed>
+                        ~ Created with react-pdf ~
+                    </Text>
+                    <Text style={styles.title}>Don Quijote de la Mancha</Text>
+                    <Text style={styles.author}>Miguel de Cervantes</Text>
+                    {/* <Image
+                        style={styles.image}
+                        src="/images/quijote1.jpg"
+                    /> */}
+                    <Text style={styles.subtitle}>
+                        Capítulo I: Que trata de la condición y ejercicio del famoso hidalgo D.
+                        Quijote de la Mancha
+                    </Text>
+                    <Text style={styles.text}>
+                        En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha
+                        mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga
+                        antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que
+                        carnero, salpicón las más noches, duelos y quebrantos los sábados,
+                        lentejas los viernes, algún palomino de añadidura los domingos,
+                        consumían las tres partes de su hacienda. El resto della concluían sayo
+                        de velarte, calzas de velludo para las fiestas con sus pantuflos de lo
+                        mismo, los días de entre semana se honraba con su vellori de lo más
+                        fino. Tenía en su casa una ama que pasaba de los cuarenta, y una sobrina
+                        que no llegaba a los veinte, y un mozo de campo y plaza, que así
+                        ensillaba el rocín como tomaba la podadera. Frisaba la edad de nuestro
+                        hidalgo con los cincuenta años, era de complexión recia, seco de carnes,
+                        enjuto de rostro; gran madrugador y amigo de la caza. Quieren decir que
+                        tenía el sobrenombre de Quijada o Quesada (que en esto hay alguna
+                        diferencia en los autores que deste caso escriben), aunque por
+                        conjeturas verosímiles se deja entender que se llama Quijana; pero esto
+                        importa poco a nuestro cuento; basta que en la narración dél no se salga
+                        un punto de la verdad
+                    </Text>
+                    <Text style={styles.text}>
+                        Es, pues, de saber, que este sobredicho hidalgo, los ratos que estaba
+                        ocioso (que eran los más del año) se daba a leer libros de caballerías
+                        con tanta afición y gusto, que olvidó casi de todo punto el ejercicio de
+                        la caza, y aun la administración de su hacienda; y llegó a tanto su
+                        curiosidad y desatino en esto, que vendió muchas hanegas de tierra de
+                        sembradura, para comprar libros de caballerías en que leer; y así llevó
+                        a su casa todos cuantos pudo haber dellos; y de todos ningunos le
+                        parecían tan bien como los que compuso el famoso Feliciano de Silva:
+                        porque la claridad de su prosa, y aquellas intrincadas razones suyas, le
+                        parecían de perlas; y más cuando llegaba a leer aquellos requiebros y
+                        cartas de desafío, donde en muchas partes hallaba escrito: la razón de
+                        la sinrazón que a mi razón se hace, de tal manera mi razón enflaquece,
+                        que con razón me quejo de la vuestra fermosura, y también cuando leía:
+                        los altos cielos que de vuestra divinidad divinamente con las estrellas
+                        se fortifican, y os hacen merecedora del merecimiento que merece la
+                        vuestra grandeza.
+                    </Text>
+                    <Text style={styles.text}>
+                        Con estas y semejantes razones perdía el pobre caballero el juicio, y
+                        desvelábase por entenderlas, y desentrañarles el sentido, que no se lo
+                        sacara, ni las entendiera el mismo Aristóteles, si resucitara para sólo
+                        ello. No estaba muy bien con las heridas que don Belianis daba y
+                        recibía, porque se imaginaba que por grandes maestros que le hubiesen
+                        curado, no dejaría de tener el rostro y todo el cuerpo lleno de
+                        cicatrices y señales; pero con todo alababa en su autor aquel acabar su
+                        libro con la promesa de aquella inacabable aventura, y muchas veces le
+                        vino deseo de tomar la pluma, y darle fin al pie de la letra como allí
+                        se promete; y sin duda alguna lo hiciera, y aun saliera con ello, si
+                        otros mayores y continuos pensamientos no se lo estorbaran. Tuvo muchas
+                        veces competencia con el cura de su lugar (que era hombre docto graduado
+                        en Sigüenza), sobre cuál había sido mejor caballero, Palmerín de
+                        Inglaterra o Amadís de Gaula; mas maese Nicolás, barbero del mismo
+                        pueblo, decía que ninguno llegaba al caballero del Febo, y que si alguno
+                        se le podía comparar, era don Galaor, hermano de Amadís de Gaula, porque
+                        tenía muy acomodada condición para todo; que no era caballero
+                        melindroso, ni tan llorón como su hermano, y que en lo de la valentía no
+                        le iba en zaga.
+                    </Text>
+                    <Text style={styles.text}>
+                        En resolución, él se enfrascó tanto en su lectura, que se le pasaban las
+                        noches leyendo de claro en claro, y los días de turbio en turbio, y así,
+                        del poco dormir y del mucho leer, se le secó el cerebro, de manera que
+                        vino a perder el juicio. Llenósele la fantasía de todo aquello que leía
+                        en los libros, así de encantamientos, como de pendencias, batallas,
+                        desafíos, heridas, requiebros, amores, tormentas y disparates
+                        imposibles, y asentósele de tal modo en la imaginación que era verdad
+                        toda aquella máquina de aquellas soñadas invenciones que leía, que para
+                        él no había otra historia más cierta en el mundo.
+                    </Text>
+                    <Text style={styles.subtitle} break>
+                        Capítulo II: Que trata de la primera salida que de su tierra hizo el
+                        ingenioso Don Quijote
+                    </Text>
+                    <Image
+                        style={styles.image}
+                        src="/images/quijote2.png"
+                    />
+                    <Text style={styles.text}>
+                        Hechas, pues, estas prevenciones, no quiso aguardar más tiempo a poner
+                        en efeto su pensamiento, apretándole a ello la falta que él pensaba que
+                        hacía en el mundo su tardanza, según eran los agravios que pensaba
+                        deshacer, tuertos que enderezar, sinrazones que emendar y abusos que
+                        mejorar y deudas que satisfacer. Y así, sin dar parte a persona alguna
+                        de su intención y sin que nadie le viese, una mañana, antes del día, que
+                        era uno de los calurosos del mes de Julio, se armó de todas sus armas,
+                        subió sobre Rocinante, puesta su mal compuesta celada, embrazó su
+                        adarga, tomó su lanza y por la puerta falsa de un corral salió al campo
+                        con grandísimo contento y alborozo de ver con cuánta facilidad había
+                        dado principio a su buen deseo. Mas apenas se vio en el campo cuando le
+                        asaltó un pensamiento terrible, y tal, que por poco le hiciera dejar la
+                        comenzada empresa; y fue que le vino a la memoria que no era armado
+                        caballero, y que, conforme a ley de caballería, ni podía ni debía tomar
+                        armas con ningún caballero; y puesto que lo fuera, había de llevar armas
+                        blancas, como novel caballero, sin empresa en el escudo, hasta que por
+                        su esfuerzo la ganase. Estos pensamientos le hicieron titubear en su
+                        propósito; mas pudiendo más su locura que otra razón alguna, propuso de
+                        hacerse armar caballero del primero que topase, a imitación de otros
+                        muchos que así lo hicieron, según él había leído en los libros que tal
+                        le tenían. En lo de las armas blancas, pensaba limpiarlas de manera, en
+                        teniendo lugar, que lo fuesen más que un arminio; y con esto se quietó18
+                        y prosiguió su camino, sin llevar otro que aquel que su caballo quería,
+                        creyendo que en aquello consistía la fuerza de las aventuras
+                    </Text>
+                    <Text style={styles.text}>
+                        Yendo, pues, caminando nuestro flamante aventurero, iba hablando consigo
+                        mesmo, y diciendo: —¿Quién duda, sino que en los venideros tiempos,
+                        cuando salga a luz la verdadera historia de mis famosos hechos, que el
+                        sabio que los escribiere no ponga, cuando llegue a contar esta mi
+                        primera salida tan de mañana, desta manera?: Apenas había el rubicundo
+                        Apolo tendido por la faz de la ancha y espaciosa tierra las doradas
+                        hebras de sus hermosos cabellos, y apenas los pequeños y pintados
+                        pajarillos con sus arpadas lenguas habían saludado con dulce y meliflua
+                        armonía la venida de la rosada Aurora, que, dejando la blanda cama del
+                        celoso marido, por las puertas y balcones del manchego horizonte a los
+                        mortales se mostraba, cuando el famoso caballero don Quijote de la
+                        Mancha, dejando las ociosas plumas, subió sobre su famoso caballo
+                        Rocinante y comenzó a caminar por el antiguo y conocido Campo de
+                        Montiel.
+                    </Text>
+                    <Text style={styles.text}>
+                        Y era la verdad que por él caminaba; y añadió diciendo: —Dichosa edad y
+                        siglo dichoso aquel adonde saldrán a luz las famosas hazañas mías,
+                        dignas de entallarse en bronces, esculpirse en mármoles y pintarse en
+                        tablas, para memoria en lo futuro. ¡Oh tú, sabio encantador, quienquiera
+                        que seas, a quien ha de tocar el ser coronista desta peregrina historia!
+                        Ruégote que no te olvides de mi buen Rocinante, compañero eterno mío en
+                        todos mis caminos y carreras.
+                    </Text>
+                    <Text style={styles.text}>
+                        Luego volvía diciendo, como si verdaderamente fuera enamorado: —¡Oh
+                        princesa Dulcinea, señora deste cautivo corazón! Mucho agravio me
+                        habedes fecho en despedirme y reprocharme con el riguroso afincamiento
+                        de mandarme no parecer ante la vuestra fermosura. Plégaos, señora, de
+                        membraros deste vuestro sujeto corazón, que tantas cuitas por vuestro
+                        amor padece. Con estos iba ensartando otros disparates, todos al modo de
+                        los que sus libros le habían enseñado, imitando en cuanto podía su
+                        lenguaje. Con esto caminaba tan despacio, y el sol entraba tan apriesa y
+                        con tanto ardor, que fuera bastante a derretirle los sesos, si algunos
+                        tuviera
+                    </Text>
+                    <Text style={styles.text}>
+                        Casi todo aquel día caminó sin acontecerle cosa que de contar fuese, de
+                        lo cual se desesperaba, porque quisiera topar luego luego con quien
+                        hacer experiencia del valor de su fuerte brazo. Autores hay que dicen
+                        que la primera aventura que le avino fue la del Puerto Lápice, otros
+                        dicen que la de los molinos de viento; pero lo que yo he podido
+                        averiguar en este caso, y lo que he hallado escrito en los anales de la
+                        Mancha, es que él anduvo todo aquel día, y, al anochecer, su rocín y él
+                        se hallaron cansados y muertos de hambre, y que, mirando a todas partes
+                        por ver si descubriría algún castillo o alguna majada de pastores donde
+                        recogerse y adonde pudiese remediar su mucha hambre y necesidad, vio, no
+                        lejos del camino por donde iba, una venta,que fue como si viera una
+                        estrella que, no a los portales, sino a los alcázares de su redención le
+                        encaminaba. Diose priesa a caminar, y llegó a ella a tiempo que
+                        anochecía.
+                    </Text>
+                    <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
+                        `${pageNumber} / ${totalPages}`
+                    )} fixed />
                 </Page>
             </Document>
-        // </PDFViewer>
+        </PDFViewer>
+
     );
 };
 

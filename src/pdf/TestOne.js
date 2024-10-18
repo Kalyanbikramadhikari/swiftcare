@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { Document, Page, Text, View, Image, StyleSheet, PDFViewer } from '@react-pdf/renderer';
 import PdfFooter from './PdfFooter';
 
+const data = [
+    { col1: 'Row 1 Col 1', col2: 'Row 1 Col 2', col3: 'Row 1 Col 3', col4: 'Row 1 Col 4' },
+    { col1: 'Row 2 Col 1', col2: 'Row 2 Col 2', col3: 'Row 2 Col 3', col4: 'Row 2 Col 4' },
+];
+
 const PatientData = {
     "patient": {
         "Name": "Ms. AAKRITI MAHARJAN",
@@ -30,30 +35,31 @@ const PatientData = {
 
 
 const styles = StyleSheet.create({
-    page: {
+    body: {
         flexDirection: 'column',
-        paddingTop: 180,  // Space for header
-        paddingBottom: 120, //space for footer
         padding: 20,
+        paddingTop: '30',
+        paddingBottom: '100',
         fontSize: 12,
-        paddingBottom: 40,
-        border:1,
-
-
+        // paddingBottom: 40,
+        border: 1,
     },
     header: {
 
-        position: 'fixed',
-        // top: 10,
-        left: 20,
-        right: 20,
+        // position: 'fixed',
+        // // top: 10,
+        // left: 20,
+        // right: 20,
         flexDirection: 'row',
-        // justifyContent: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+        // border: 1,
+        paddingTop: 20,
+        paddingHorizontal: 20,
     },
     logo: {
         // width: 50,
         height: 50,
-        position: 'fixed'
     },
     patientData: {
         display: 'flex',
@@ -81,14 +87,22 @@ const styles = StyleSheet.create({
         display: 'table',
         width: 'auto',
         borderStyle: 'solid',
-        borderColor: '#000',
-        borderWidth: 1,
-    },
-    tableRow: {
+        // borderWidth: 1,
+        borderColor: '#bfbfbf',
+      },
+      tableRow: {
         flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderBottomColor: '#000',
-    },
+      },
+      tableCol: {
+        width: '25%',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: '#bfbfbf',
+      },
+      tableCell: {
+        margin: 5,
+        fontSize: 10,
+      },
     tableCellHeader: {
         width: '20%',
         padding: 5,
@@ -99,19 +113,21 @@ const styles = StyleSheet.create({
 
         // textAlign: 'center',
     },
-    tableCell: {
-        width: '20%',
-        padding: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#000',
+    // tableCell: {
+    //     width: '20%',
+    //     padding: 5,
+    //     borderBottomWidth: 1,
+    //     borderBottomColor: '#000',
 
-        fontWeight: 'normal'
-    },
+    //     fontWeight: 'normal'
+    // },
     testsummary: {
         marginTop: 20,
         borderWidth: 1,
         padding: '5',
-        paddingTop: '9'
+        paddingTop: '9',
+        breakInside: 'avoid',
+
     },
     note: {
         position: 'absolute',
@@ -122,10 +138,10 @@ const styles = StyleSheet.create({
 
     },
     footer: {
-        position: 'fixed',
+        position: 'absolute',
         width: '100%',
         bottom: 0,
-        top:5,
+        // top:5,
         right: 0,
         left: 0,
 
@@ -143,8 +159,8 @@ const TestOne = () => {
     return (
         <PDFViewer style={{ width: '100%', height: '100vh' }}>
             <Document>
-                <Page size="A4" style={styles.page}>
-                    <View style={styles.header}>
+                <Page size="A4" style={styles.body}>
+                    <View style={styles.header} fixed>
                         <Image style={styles.logo} src="/images/logo.png" />
                         {/* <View>
                             <Text>Swift Care Diagnostic</Text>
@@ -197,10 +213,10 @@ const TestOne = () => {
                             </View>
                         ))}
                     </View>
-                    <View style={styles.testsummary}>
+                    <View style={styles.testsummary} >
                         <Text style={styles.note}>NOTE:</Text>
                         <Text>Summary:</Text>
-                        <Text>Vitamin B 12 along with folate is essential for DNA synthesis and myelin formation.
+                        <Text wrap={false}>Vitamin B 12 along with folate is essential for DNA synthesis and myelin formation.
                             Vitamin B 12 deficiency can be because of nutritional deficiency, malabsorption and other gastrointestinal causes. The test is ordered primarily to help
                             diagnose the cause of mycrocytic/ megaloblastic anemia.</Text>
                         <Text>Decreased levels are seen in anaemia, normal near term pregnancy, vegetarianism, partial gastrectomy/ ileal damange, celiac disease, with oral contraceptive
@@ -211,11 +227,8 @@ const TestOne = () => {
                             *Please note test values may vary depending on the assay method used.
 
                         </Text>
-
                     </View>
-
-
-                    <View style={styles.testsummary}>
+                    <View style={styles.testsummary} wrap={false}>
                         <Text style={styles.note}>NOTE</Text>
                         <View >
                             <View >
@@ -251,11 +264,63 @@ const TestOne = () => {
 
                         <Text style={styles.summary}>
                             Summary:{'\n'}
+                            Vitamin D is a group of fat-soluble steroid hormone precursor responsible for increasing intestinal absorption of calcium, magnesium, and phosphate, and multiple other biological effects, which is mainly produced in the skin by exposure to sunlight. Vitamin D from the skin synthesis is biologically inactive; hydroxylation in the liver and kidney is required for activation. In humans, the most important compounds in this group are vitamin D3 and vitamin D2, both of them can be ingested from the diet and from supplements. Only a few foods contain vitamin D. The major natural source of the vitamin is synthesis of vitamin D3 in the skin from cholesterol through a chemical reaction that is dependent on sun exposure. Vitamin D is transported to the liver in combination with a binding protein in the bloodstream, converted to 25-hydroxyvitamin D in the liver, and then converted to 1,25-hydroxyvitamin D in the kidney. This is an active ingredient in which vitamin D functions. The 1,25 hydroxy vitamin D content in the circulation is extremely low, with a half-life of only 4 h. This primary circulating form of vitamin D (25-OH) is biologically inactive with levels approximately 1000-fold greater than the circulating1,25-dihydroxy vitamin D. The half-life of circulating vitamin D (25-OH) is 3 weeks. Vitamin D can regulate the balance of calcium and phosphorus metabolism and bone formation, and is closely related
                             Vitamin D is a group of fat-soluble steroid hormone precursor responsible for increasing intestinal absorption of calcium, magnesium, and phosphate, and multiple other biological effects, which is mainly produced in the skin by exposure to sunlight. Vitamin D from the skin synthesis is biologically inactive; hydroxylation in the liver and kidney is required for activation. In humans, the most important compounds in this group are vitamin D3 and vitamin D2, both of them can be ingested from the diet and from supplements. Only a few foods contain vitamin D. The major natural source of the vitamin is synthesis of vitamin D3 in the skin from cholesterol through a chemical reaction that is dependent on sun exposure. Vitamin D is transported to the liver in combination with a binding protein in the bloodstream, converted to 25-hydroxyvitamin D in the liver, and then converted to 1,25-hydroxyvitamin D in the kidney. This is an active ingredient in which vitamin D functions. The 1,25 hydroxy vitamin D content in the circulation is extremely low, with a half-life of only 4 h. This primary circulating form of vitamin D (25-OH) is biologically inactive with levels approximately 1000-fold greater than the circulating1,25-dihydroxy vitamin D. The half-life of circulating vitamin D (25-OH) is 3 weeks. Vitamin D can regulate the balance of calcium and phosphorus metabolism and bone formation, and is closely related to cardiovascular disease, autoimmune diseases, diabetes and hypertension etc.
                         </Text>
                     </View>
+                    <Text style={styles.text} >
+                        En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha
+                        mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga
+                        antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que
+                        carnero, salpicón las más noches, duelos y quebrantos los sábados,
+                        lentejas los viernes, algún palomino de añadidura los domingos,
+                        consumían las tres partes de su hacienda. El resto della concluían sayo
+                        de velarte, calzas de velludo para las fiestas con sus pantuflos de lo
+                        mismo, los días de entre semana se honraba con su vellori de lo más
+                        fino. Tenía en su casa una ama que pasaba de los cuarenta, y una sobrina
+                        que no llegaba a los veinte, y un mozo de campo y plaza, que así
+                        ensillaba el rocín como tomaba la podadera. Frisaba la edad de nuestro
+                        hidalgo con los cincuenta años, era de complexión recia, seco de carnes,
+                        enjuto de rostro; gran madrugador y amigo de la caza. Quieren decir que
+                        tenía el sobrenombre de Quijada o Quesada (que en esto hay alguna
+                        diferencia en los autores que deste caso escriben), aunque por
+                        conjeturas verosímiles se deja entender que se llama Quijana; pero esto
+                        importa poco a nuestro cuento; basta que en la narración dél no se salga
+                        un punto de la verdad
+                    </Text>
 
-                    <View style={styles.signatureSection} wrap={false}>
+                    <View render={({ pageNumber, totalPages }) => (
+                        pageNumber === totalPages && (
+                            <Text style={{ marginVertical: '20', textAlign: 'center' }}>
+                                End of report
+                            </Text>
+                        )
+
+                    )} />
+
+                    <View style={styles.table}>
+                        {/* Table Header */}
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableCol}><Text style={styles.tableCell}>Header 1</Text></View>
+                            <View style={styles.tableCol}><Text style={styles.tableCell}>Header 2</Text></View>
+                            <View style={styles.tableCol}><Text style={styles.tableCell}>Header 3</Text></View>
+                            <View style={styles.tableCol}><Text style={styles.tableCell}>Header 4</Text></View>
+                        </View>
+
+                        {/* Render Rows from Data */}
+                        {data.map((row, index) => (
+                            <View style={styles.tableRow} key={index}>
+                                <View style={styles.tableCol}><Text style={styles.tableCell}>{row.col1}</Text></View>
+                                <View style={styles.tableCol}><Text style={styles.tableCell}>{row.col2}</Text></View>
+                                <View style={styles.tableCol}><Text style={styles.tableCell}>{row.col3}</Text></View>
+                                <View style={styles.tableCol}><Text style={styles.tableCell}>{row.col4}</Text></View>
+                            </View>
+                        ))}
+                    </View>
+
+                    {/* </View> */}
+
+                    <View style={styles.signatureSection} >
                         <View>
                             <Text>Performed By</Text>
                             <Text>Mahesh Gapaju</Text>
@@ -269,11 +334,8 @@ const TestOne = () => {
                             <Text>NHPC No. : A-1066 MLT</Text>
                         </View>
                     </View>
-
-
-                    <View style={styles.footer} >
+                    <View style={styles.footer} fixed >
                         <PdfFooter />
-
                     </View>
 
                 </Page>
