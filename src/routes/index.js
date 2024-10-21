@@ -9,6 +9,7 @@ import PdfHeader from '../pdf/PdfHeader';
 // import TestTwo from '../pdf/TestTwo';
 import TestOne from '../pdf/TestOne';
 import ReactpdfMultiplePage from '../pdf/ReactpdfMultiplePage';
+import SwiftMultiplePage from '../pdf/SwiftMultiplePage';
 
 
 // react lazy only supports deault export
@@ -27,7 +28,9 @@ const Index = () => {
                     <Route path='/admin/register' element={<Register />} />
                     <Route path='/admin/register/permissions' element={<Permissions />} />
                     <Route path='/doctors' element={<Doctors />} />
-                    <Route path='/pdf' element={<TestOne/>} />
+                    <Route path='/pdf' element={<SwiftMultiplePage/>} />
+                    {/* <Route path='/pdf' element={<TestOne/>} /> */}
+
                     <Route path='/pdf2' element={<ReactpdfMultiplePage/>} />
 
                     {/* <Route path='/pdf' element={<TestTwo />} /> */}

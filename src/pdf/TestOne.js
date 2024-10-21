@@ -44,45 +44,7 @@ const styles = StyleSheet.create({
         // paddingBottom: 40,
         border: 1,
     },
-    header: {
-
-        // position: 'fixed',
-        // // top: 10,
-        // left: 20,
-        // right: 20,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginBottom: 10,
-        // border: 1,
-        paddingTop: 20,
-        paddingHorizontal: 20,
-    },
-    logo: {
-        // width: 50,
-        height: 50,
-    },
-    patientData: {
-        display: 'flex',
-        marginBottom: 20,
-        borderStyle: 'solid',
-        borderColor: '#000',
-        borderWidth: 1,
-        padding: 10,
-        flexWrap: 'wrap',
-        flexDirection: 'row', // Ensure children are in a row
-        justifyContent: 'space-between',
-    },
-    patientRow: {
-        flexDirection: 'row',
-        width: '49%',
-        marginBottom: 3,
-        // borderWidth: 1,
-
-
-    },
-    patientItem: {
-        width: '50%'
-    },
+   
     table: {
         display: 'table',
         width: 'auto',

@@ -1,8 +1,9 @@
-export default HematologyTest = {
+export default  {
     "title": "HEMATOLOGY - GENERAL TEST REPORT",
+    "category": "",
     "data": [
         {
-            "category": "Complete Blood Count (CBC)",
+            "subCategory": "Complete Blood Count (CBC)",
             "tests": [
                 {
                     "test": "Total Leucocyte Count (TLC)",
@@ -14,7 +15,7 @@ export default HematologyTest = {
             ]
         },
         {
-            "category": "Differential Leucocyte Count (DLC)",
+            "subCategory": "Differential Leucocyte Count (DLC)",
             "tests": [
                 {
                     "test": "Neutrophil",

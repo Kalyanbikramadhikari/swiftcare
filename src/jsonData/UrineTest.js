@@ -1,8 +1,9 @@
-export default UrineTest = {
+export default  {
     "title": "URINE - GENERAL TEST REPORT",
+    "category": "URINE RE/ME",
     "data": [
       {
-        "category": "URINE RE/ME",
+
         "subCategory": "Physical Examination",
         "tests": [
           {
@@ -16,7 +17,7 @@ export default UrineTest = {
         ]
       },
       {
-        "category": "URINE RE/ME",
+
         "subCategory": "Chemical Examination",
         "tests": [
           {
@@ -34,7 +35,7 @@ export default UrineTest = {
         ]
       },
       {
-        "category": "URINE RE/ME",
+
         "subCategory": "Microscopical Examination",
         "tests": [
           {

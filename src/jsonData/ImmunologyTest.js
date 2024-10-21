@@ -1,4 +1,4 @@
-export default ImmunologyTest = {
+export default  {
     "title": "IMMUNOLOGY - SPECIAL TEST REPORT",
     "data": [
       {
